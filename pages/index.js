@@ -6,20 +6,20 @@ function IndexPage({ data }) {
     <div>
       <Nav />
       <div className="px-10 py-20">
-        <h1 className="text-4xl text-gray-700 dark:text-gray-100">
+        <h1 className="text-4xl text-gray-700">
           {data.title}
         </h1>
         {data.body.map(({ html, headline, image, box }, i) => {
           return html ? (
             <p
               key={i}
-              className="text-gray-700 dark:text-gray-100"
+              className="text-gray-700"
               dangerouslySetInnerHTML={{ __html: html }}
             />
           ) : headline ? (
             <h2
               key={i}
-              className="text-2xl font-bold text-gray-700 dark:text-gray-100"
+              className="text-2xl font-bold text-gray-700"
             >
               {headline}
             </h2>
