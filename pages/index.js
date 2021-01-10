@@ -13,20 +13,36 @@ export async function getServerSideProps() {
 }
 
 function IndexPage({ data }) {
-  console.log(data)
   return (
-    <div className="px-8">
+    <div className nt="px-4 lg:px-10 mb-16">
       <Nav />
-      <h1 className="text-3xl font-bold mb-6">Latest articles</h1>
-      <ul>
-        {data.map(({ title, uuid }) => (
-          <li key={uuid} className="mb-3">
-            <Link href={`./article/${uuid}`}>
-              <a className="underline text-blue-700">{title}</a>
-            </Link>
-          </li>
-        ))}
-      </ul>
+      <div className="max-w-2xl mx-auto">
+        <h1 className="text-3xl font-bold mb-6">Front page</h1>
+        <h2 className="text-2xl font-bold mb-4">Free articles</h2>
+        <ul className="mb-12">
+          {data
+            .filter((article) => !article.premium)
+            .map(({ title, uuid }) => (
+              <li key={uuid} className="mb-3">
+                <Link href={`./article/${uuid}`}>
+                  <a className="underline text-blue-700">{title}</a>
+                </Link>
+              </li>
+            ))}
+        </ul>
+        <h2 className="text-2xl font-bold mb-4">Premium articles</h2>
+        <ul>
+          {data
+            .filter((article) => article.premium)
+            .map(({ title, uuid }) => (
+              <li key={uuid} className="mb-3">
+                <Link href={`./article/${uuid}`}>
+                  <a className="underline text-blue-700">{title}</a>
+                </Link>
+              </li>
+            ))}
+        </ul>
+      </div>
     </div>
   )
 }
