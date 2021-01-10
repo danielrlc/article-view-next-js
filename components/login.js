@@ -1,16 +1,16 @@
-import { useState } from 'react'
-import Link from 'next/link'
-import Nav from '../components/nav'
-
-function Login() {
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
-
-  const updateUsername = (event) => {
+export default function Login({
+  password,
+  setAuthToken,
+  setPassword,
+  setUserId,
+  setUsername,
+  username,
+}) {
+  const handleUsernameInput = (event) => {
     setUsername(event.target.value)
   }
 
-  const updatePassword = (event) => {
+  const handlePasswordInput = (event) => {
     setPassword(event.target.value)
   }
 
@@ -19,21 +19,21 @@ function Login() {
     const requestOptions = {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json;charset=utf-8',
+        accept: 'application/json;charset=utf-8',
       },
       body: JSON.stringify({ username, password }),
     }
-    fetch(
-      'https://persona.api.ksfmedia.fi/v1/swagger-ui/#/login',
-      requestOptions,
-    )
+    fetch('https://persona.api.ksfmedia.fi/v1/login', requestOptions)
       .then((response) => response.json())
-      .then((data) => console.log('fetchedData', data))
+      .then((data) => {
+        setUserId(data.uuid)
+        setAuthToken(data.token)
+      })
   }
 
   return (
-    <div className="px-8">
-      <Nav />
+    <div className="mb-12">
       <h1 className="text-3xl font-bold mb-6">Log in</h1>
       <form onSubmit={handleSubmit}>
         <label className="block mb-1" htmlFor="username">
@@ -44,7 +44,7 @@ function Login() {
           name="username"
           id="username"
           value={username}
-          onChange={updateUsername}
+          onChange={handleUsernameInput}
           className="block px-4 py-2 mb-4 border border-gray-300 rounded w-64"
         />
         <label className="block mb-1" htmlFor="password">
@@ -55,7 +55,7 @@ function Login() {
           name="password"
           id="password"
           value={password}
-          onChange={updatePassword}
+          onChange={handlePasswordInput}
           className="block px-4 py-2 mb-8 border border-gray-300 rounded w-64"
         />
         <button
@@ -68,5 +68,3 @@ function Login() {
     </div>
   )
 }
-
-export default Login

@@ -151,11 +151,10 @@ Solution:
 
 This follows advice from [The Figure with Optional Caption element - HTML: HyperText Markup Language | MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figure)
 
-## What is missing from this app?
+## What next?
 
 Here are some important things I think the app would need next:
 - Search engine optimisation (SEO)
 - Friendlier URLs for the article pages
 - Dark mode? (Easy to add in Tailwind CSS)
-- Code linting with ESLint (My excuse: I recently made Vim my main, full-time text editor for all personal projects, and I haven't added ESLint to it yet.)
 - Testing with [Cypress](https://www.cypress.io/)
