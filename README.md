@@ -42,11 +42,11 @@ This is handled by this code in `/pages/article/[articleId].js`
 
 ## Tech stack
 
-I used [Next.js by Vercel - The React Framework](https://nextjs.org/) and [Tailwind CSS](https://tailwindcss.com/) to build the app.
+I used [Next.js](https://nextjs.org/) and [Tailwind CSS](https://tailwindcss.com/) to build the app.
 
 ### Why Next.js?
 
-Next.js lets you use a combination of static and server-side rendering (SSR). I felt that SSR could be important for a site like hbl.fi as it can make search engine optimisation (SEO) much less of a headache. I have used server-side rendering in this app. It also makes authentication easier to handle than in some other frameworks like Gatsby.
+Next.js lets you use a combination of static and server-side rendering (SSR). I felt that SSR could be important for a site like hbl.fi as it can make search engine optimisation (SEO) less of a headache than it can be in a single-page application. I have used server-side rendering in this app.
 
 ### Why Tailwind CSS?
 
@@ -87,9 +87,9 @@ The app is styled for all screen sizes. On mobile, screen real estate is maximis
 
 I used [Prettier](https://prettier.io/) to format my JavaScript, CSS and HTML code consistently. I included a `.prettierrc` file in the root folder, and set the app up without semicolons at the end of JavaScript statements, in line with the documentation on the [Next.js](https://nextjs.org/) website.
 
-## CSS and accessibility notes
+## Accessibility notes
 
-Running a Lighthouse test on [this page](https://www.hbl.fi/artikel/sista-debatten-trump-biden-kan-avgora-valet-vagmastarstaterna-har-overraskat-forr/) flagged up a number of accessibility issues.
+Running a Lighthouse test on [this page on the hbl.fi site](https://www.hbl.fi/artikel/sista-debatten-trump-biden-kan-avgora-valet-vagmastarstaterna-har-overraskat-forr/) flagged up some accessibility issues.
 
 ### Issue 1: "Heading elements are not in a sequentially-descending order"
 
@@ -134,4 +134,4 @@ In no particular order:
 - Search engine optimisation (SEO)
 - Friendlier URLs for the article pages
 - Dark mode? (Easy to add in Tailwind CSS)
-- Code linting with ESLint
+- Code linting with ESLint (My excuse: I recently made Vim my main, full-time text editor for all personal projects, and I haven't added ESLint to it yet.)
