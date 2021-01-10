@@ -130,7 +130,7 @@ This follows advice from [The Figure with Optional Caption element - HTML: Hyper
 
 ## What is missing from this app?
 
-In no particular order:
+Here are some important things I think the app would need next:
 - Search engine optimisation (SEO)
 - Friendlier URLs for the article pages
 - Dark mode? (Easy to add in Tailwind CSS)
