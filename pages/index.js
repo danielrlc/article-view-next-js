@@ -16,11 +16,10 @@ export async function getServerSideProps() {
 
 async function getPremiumArticle(uuid, userId, authToken) {
   const url = `https://lettera.api.ksfmedia.fi/v3/article/${uuid}`
-  const cleanedAuthToken = "'" + authToken + "'"
   const headers = {
     'Content-Type': 'application/json',
     AuthUser: userId,
-    Authorization: cleanedAuthToken,
+    Authorization: `OAuth ${authToken}`,
   }
   const res = await fetch(url, { headers })
   let data = await res.json()
