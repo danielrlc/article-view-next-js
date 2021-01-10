@@ -14,6 +14,19 @@ export async function getServerSideProps() {
   }
 }
 
+async function getPremiumArticle(uuid, userId, authToken) {
+  const url = `https://lettera.api.ksfmedia.fi/v3/article/${uuid}`
+  const cleanedAuthToken = "'" + authToken + "'"
+  const headers = {
+    'Content-Type': 'application/json',
+    AuthUser: userId,
+    Authorization: cleanedAuthToken,
+  }
+  const res = await fetch(url, { headers })
+  let data = await res.json()
+  console.log(data)
+}
+
 function IndexPage({ data }) {
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -22,6 +35,14 @@ function IndexPage({ data }) {
   const [loginFormIsShown, setLoginFormIsShown] = useState(false)
   const [userIsLoggedIn, setUserIsLoggedIn] = useState(false)
   const toggleLoginForm = () => setLoginFormIsShown(!loginFormIsShown)
+
+  const showPremiumArticle = (uuid) => () => {
+    if (userIsLoggedIn) {
+      getPremiumArticle(uuid, userId, authToken)
+    } else {
+      alert('Log in to see this article.')
+    }
+  }
 
   useEffect(() => {
     if (userId && authToken) {
@@ -69,11 +90,19 @@ function IndexPage({ data }) {
           {data
             .filter((article) => article.premium)
             .map(({ title, uuid }) => (
-              <li key={uuid} className="mb-3">
-                <Link href={`./article/${uuid}`}>
-                  <a className="underline text-blue-700">{title}</a>
-                </Link>
-              </li>
+              <>
+                <li key={uuid} className="mb-3">
+                  <Link href={`./article/${uuid}`}>
+                    <a className="underline text-blue-700">{title}</a>
+                  </Link>
+                </li>
+                <button
+                  className="btn-blue mb-4"
+                  onClick={showPremiumArticle(uuid)}
+                >
+                  Show article
+                </button>
+              </>
             ))}
         </ul>
       </div>
