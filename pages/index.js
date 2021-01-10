@@ -14,7 +14,7 @@ export async function getServerSideProps() {
 
 function IndexPage({ data }) {
   return (
-    <div className nt="px-4 lg:px-10 mb-16">
+    <div className="px-4 lg:px-10 mb-16">
       <Nav />
       <div className="max-w-2xl mx-auto">
         <h1 className="text-3xl font-bold mb-6">Front page</h1>

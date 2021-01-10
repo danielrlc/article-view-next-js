@@ -11,6 +11,12 @@ npm run dev
 
 Go to [localhost:3000](http://localhost:3000/) to see app (with hot reloading).
 
+Build the app for production:
+
+```bash
+npm run build
+```
+
 ## Example articles
 
 ### View free article with embedded box
@@ -57,7 +63,7 @@ Here are some of the main reasons why I like Tailwind:
 - Tailwind helps you avoid writing much CSS of your own.
 - Tailwind comes with very few opinions, and can be deeply customised.
 - Tailwind makes it easy for you to avoid premature abstraction, but when needed, you can abstract your styles into components.
-- You can use [PurgeCSS](https://purgecss.com/) to remove all unused styles when you build your app.
+- You can use [PurgeCSS](https://purgecss.com/) to remove all unused styles when you build your app. (With this app, the built CSS file is just ~2 kB)
 
 If you haven't used Tailwind CSS before, or some other utility CSS framework, the following line in my code might make you freak out:
 
@@ -88,6 +94,23 @@ The app is styled for all screen sizes. On mobile, screen real estate is maximis
 I used [Prettier](https://prettier.io/) to format my JavaScript, CSS and HTML code consistently. I included a `.prettierrc` file in the root folder, and set the app up without semicolons at the end of JavaScript statements, in line with the documentation on the [Next.js](https://nextjs.org/) website.
 
 ## Accessibility notes
+
+### Semantic HTML elements
+
+I used these semantic elements in the article view:
+
+```html
+<header>
+<nav>
+<article>
+<section>
+```
+
+### Login form
+
+For the [login form](http://localhost:3000/login), I used both `id` and `name` attributes to tie labels and input boxes together.
+
+### Accessibility improvements (from hbl)
 
 Running a Lighthouse test on [this page on the hbl.fi site](https://www.hbl.fi/artikel/sista-debatten-trump-biden-kan-avgora-valet-vagmastarstaterna-har-overraskat-forr/) flagged up some accessibility issues.
 
@@ -135,3 +158,4 @@ Here are some important things I think the app would need next:
 - Friendlier URLs for the article pages
 - Dark mode? (Easy to add in Tailwind CSS)
 - Code linting with ESLint (My excuse: I recently made Vim my main, full-time text editor for all personal projects, and I haven't added ESLint to it yet.)
+- Testing with [Cypress](https://www.cypress.io/)
