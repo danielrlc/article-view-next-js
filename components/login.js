@@ -1,3 +1,5 @@
+import axios from 'axios'
+
 export default function Login({
   password,
   setAuthToken,
@@ -16,19 +18,22 @@ export default function Login({
 
   const handleSubmit = (event) => {
     event.preventDefault()
-    const requestOptions = {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json;charset=utf-8',
-        accept: 'application/json;charset=utf-8',
-      },
-      body: JSON.stringify({ username, password }),
+    const user = {
+      username,
+      password,
     }
-    fetch('https://persona.api.ksfmedia.fi/v1/login', requestOptions)
-      .then((response) => response.json())
-      .then((data) => {
-        setUserId(data.uuid)
-        setAuthToken(data.token)
+    const url = `https://persona.api.ksfmedia.fi/v1/login`
+    axios.post(url, user)
+      .then(response => {
+        if (response.status === 200) {
+          setUserId(response.data.uuid)
+          setAuthToken(response.data.token)
+        } else {
+          console.log(response.data.error)
+        }
+      })
+      .catch(error => {
+        console.log(error.response.data.error)
       })
   }
 
