@@ -1,6 +1,11 @@
 import Link from 'next/link'
 
-export default function Nav({ toggleLoginForm, userIsLoggedIn }) {
+export default function Nav({
+  toggleLoginForm,
+  userIsLoggedIn,
+  logOut,
+  loginFormIsShown,
+}) {
   return (
     <nav>
       <ul className="flex items-center justify-between py-4">
@@ -10,10 +15,12 @@ export default function Nav({ toggleLoginForm, userIsLoggedIn }) {
           </Link>
         </li>
         {userIsLoggedIn ? (
-          <li>Logged in</li>
+          <button className="btn-blue" onClick={logOut}>
+            Log out
+          </button>
         ) : (
           <button className="btn-blue" onClick={toggleLoginForm}>
-            Log in
+            {loginFormIsShown ? 'Hide login form' : 'Show login form'}
           </button>
         )}
       </ul>

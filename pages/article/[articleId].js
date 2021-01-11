@@ -36,7 +36,7 @@ function Article({ data }) {
   } = data
 
   return (
-    <div className="px-4 lg:px-10 mb-16 text-gray-800">
+    <div className="px-4 lg:px-10 mt-6 mb-16 text-gray-800">
       <article className="max-w-2xl mx-auto">
         {/* title and main image */}
         <h1 className="text-4xl mb-6">{title}</h1>
@@ -62,9 +62,8 @@ function Article({ data }) {
                 i < authors.length - 1 ? ', ' : ''
               }`}</span>
             ))}
-            <p>{updateTime}</p>
           </div>
-          <p>social media icons here?</p>
+            <p>{updateTime}</p>
         </section>
 
         {/* article body */}
