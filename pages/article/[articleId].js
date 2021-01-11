@@ -1,16 +1,28 @@
 import axios from 'axios'
+import * as cookie from 'cookie'
+import Cookies from 'js-cookie'
 import Nav from '../../components/nav'
 
 // This gets called on every request
-export async function getServerSideProps({ params }) {
-  const url = `https://lettera.api.ksfmedia.fi/v3/article/${params.articleId}`
-  const response = await axios.get(url)
+// export async function getServerSideProps({ params }) {
+export async function getServerSideProps(context) {
+  const parsedCookies = cookie.parse(context.req.headers.cookie)
+  const { userId, authToken } = parsedCookies
+  const url = `https://lettera.api.ksfmedia.fi/v3/article/${context.params.articleId}`
+  const headers = {
+    AuthUser: userId,
+    Authorization: `OAuth ${authToken}`,
+  }
+  if (userId && authToken) {
+    var response = await axios.get(url, { headers })
+  } else {
+    var response = await axios.get(url)
+  }
   const data = response.data
   return { props: { data } }
 }
 
 function Article({ data }) {
-  console.log(data)
   const {
     authors,
     body,
@@ -22,11 +34,9 @@ function Article({ data }) {
     shareUrl,
     title,
   } = data
+
   return (
     <div className="px-4 lg:px-10 mb-16 text-gray-800">
-      <header>
-        <Nav />
-      </header>
       <article className="max-w-2xl mx-auto">
         {/* title and main image */}
         <h1 className="text-4xl mb-6">{title}</h1>
