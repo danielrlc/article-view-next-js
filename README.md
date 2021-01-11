@@ -26,16 +26,16 @@
 ```bash
 git clone git@github.com:danielrlc/article-view-next.git
 cd article-view-next
-npm install
-npm run dev
+yarn
+yarn run dev
 ```
 
-Go to [localhost:3000](http://localhost:3000/) to see app (with hot reloading).
+Go to [localhost:3000](http://localhost:3000/) to view app (with hot reloading).
 
 Build the app for production:
 
 ```bash
-npm run build
+yarn run build
 ```
 
 ## Example articles
