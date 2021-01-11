@@ -1,5 +1,26 @@
 # App documentation
 
+- [App documentation](#app-documentation)
+  * [Set up and start app](#set-up-and-start-app)
+  * [Example articles](#example-articles)
+    + [View free article with embedded box](#view-free-article-with-embedded-box)
+    + [View free article with no listImage](#view-free-article-with-no-listimage)
+  * [Tech stack](#tech-stack)
+    + [Why Next.js?](#why-nextjs-)
+    + [Why Tailwind CSS?](#why-tailwind-css-)
+  * [Responsive design](#responsive-design)
+  * [Code formatting](#code-formatting)
+  * [Accessibility notes](#accessibility-notes)
+    + [Semantic HTML elements](#semantic-html-elements)
+    + [Login form](#login-form)
+    + [Accessibility improvements](#accessibility-improvements)
+    + [Issue 1: "Heading elements are not in a sequentially-descending order"](#issue-1---heading-elements-are-not-in-a-sequentially-descending-order-)
+    + [Issue 2: "Image elements do not have [alt] attributes"](#issue-2---image-elements-do-not-have--alt--attributes-)
+  * [Authentication notes](#authentication-notes)
+  * [What next?](#what-next-)
+
+<small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
+
 ## Set up and start app
 
 ```bash
@@ -52,18 +73,22 @@ I used [Next.js](https://nextjs.org/) and [Tailwind CSS](https://tailwindcss.com
 
 ### Why Next.js?
 
-Next.js lets you use a combination of static and server-side rendering (SSR). I felt that SSR could be important for a site like hbl.fi as it can make search engine optimisation (SEO) less of a headache than it can be in a single-page application. I have used server-side rendering in this app.
+Next.js lets you use static and/or server-side rendering (SSR). I used SSR in my app as I think it is a good fit for a site like hbl.fi. SSR has advantages over single-page apps (SPAs) in these areas:
+- search engine optimisation (SEO)
+- progressive enhancement and accessibility (not relying on client-side JavaScript)
+- time to initial render
+- authentication (compared with a static site generator like Gatsby, for example)
 
 ### Why Tailwind CSS?
 
-Here are some of the main reasons why I like Tailwind:
+Here are some of the main reasons why Tailwind is my favourite CSS framework:
 - Tailwind lets you see and manage your CSS right inside your HTML.
 - You need to be fairly good at CSS to use Tailwind, and Tailwind helps you improve at CSS, because rather than hiding the CSS away, it makes it far more visible and "in your face".
 - Tailwind helps you avoid specificity issues.
 - Tailwind helps you avoid writing much CSS of your own.
 - Tailwind comes with very few opinions, and can be deeply customised.
 - Tailwind makes it easy for you to avoid premature abstraction, but when needed, you can abstract your styles into components.
-- You can use [PurgeCSS](https://purgecss.com/) to remove all unused styles when you build your app. (With this app, the built CSS file is just ~2 kB)
+- You can use [PurgeCSS](https://purgecss.com/) to remove all unused styles when you build your app. (With this app, the minimised, built CSS file is just ~2 kB)
 
 If you haven't used Tailwind CSS before, or some other utility CSS framework, the following line in my code might make you freak out:
 
@@ -108,9 +133,9 @@ I used these semantic elements in the article view:
 
 ### Login form
 
-For the [login form](http://localhost:3000/login), I used both `id` and `name` attributes to tie labels and input boxes together.
+For the [login form](http://localhost:3000/login), I used `id`, `name` and `for` attributes (`htmlFor` in React) to tie labels and input boxes together.
 
-### Accessibility improvements (from hbl)
+### Accessibility improvements
 
 Running a Lighthouse test on [this page on the hbl.fi site](https://www.hbl.fi/artikel/sista-debatten-trump-biden-kan-avgora-valet-vagmastarstaterna-har-overraskat-forr/) flagged up some accessibility issues.
 
@@ -151,10 +176,18 @@ Solution:
 
 This follows advice from [The Figure with Optional Caption element - HTML: HyperText Markup Language | MDN](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/figure)
 
+## Authentication notes
+
+Authentication information is stored in cookies. I couldn't use `localStorage` in the browser because `getServerSideProps` works on the server and doesn't have access to the browser's `localStorage`.
+
+I used `axios` to make API requests. I read that it does a good job of standardising API requests from the server and the client.
+
 ## What next?
 
-Here are some important things I think the app would need next:
+Here are the things I would add next to this app, if I were getting it ready for production:
 - Search engine optimisation (SEO)
 - Friendlier URLs for the article pages
-- Dark mode? (Easy to add in Tailwind CSS)
 - Testing with [Cypress](https://www.cypress.io/)
+- Refactoring React components into smaller components, to make the code more readable
+- Customising Tailwind with brand colours and so on
+- Error handling. I have a little of this, but not much.
