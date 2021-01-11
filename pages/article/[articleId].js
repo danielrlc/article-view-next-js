@@ -1,12 +1,11 @@
+import axios from 'axios'
 import Nav from '../../components/nav'
 
 // This gets called on every request
 export async function getServerSideProps({ params }) {
-  const res = await fetch(
-    `https://lettera.api.ksfmedia.fi/v3/article/${params.articleId}`,
-  )
-  const data = await res.json()
-  // Pass data to the page via props
+  const url = `https://lettera.api.ksfmedia.fi/v3/article/${params.articleId}`
+  const response = await axios.get(url)
+  const data = response.data
   return { props: { data } }
 }
 
@@ -47,7 +46,7 @@ function Article({ data }) {
         {/* article meta */}
         <section className="text-gray-500 text-sm my-6 border border-l-0 border-r-0 border-gray-300 py-2 flex justify-between">
           <div>
-            {/* Demo with >1 author here: https://codesandbox.io/s/beautiful-colden-k1rpm?file=/src/App.js */}
+            {/* Demo to test with >1 author here: https://codesandbox.io/s/beautiful-colden-k1rpm?file=/src/App.js */}
             {authors.map((author, i) => (
               <span key={i}>{`${author.byline}${
                 i < authors.length - 1 ? ', ' : ''
