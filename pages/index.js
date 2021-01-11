@@ -2,13 +2,18 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Nav from '../components/nav'
 import Login from '../components/login'
+import axios from 'axios'
 
 // This gets called on every request
 export async function getServerSideProps() {
-  // Fetch data from external API
-  const res = await fetch(`https://lettera.api.ksfmedia.fi/v3/frontpage`)
-  let data = await res.json()
-  // Pass data to the page via props
+  const url = `https://lettera.api.ksfmedia.fi/v3/frontpage`
+  const response = await axios.get(url)
+  const data = response.data
+  if (!data) {
+    return {
+      notFound: true,
+    }
+  }
   return {
     props: { data },
   }
