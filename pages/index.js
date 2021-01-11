@@ -78,10 +78,9 @@ function IndexPage({ data }) {
       )}
       {userId && authToken && (
         <div className="mb-8 text-sm border border-2 rounded p-4">
-          <p className="font-bold">Login Details</p>
-          <p>
-            (I left this information visible to show that logging in works.)
-          </p>
+          <p className="font-bold mb-3">Login details</p>
+          <p className="mb-3">
+            (I left this authentication information visible to show that logging in works. I also left cookie information visible in the console when you log in and log out.)</p>
           <p>userId: {userId}</p>
           <p>authToken: {authToken}</p>
         </div>
