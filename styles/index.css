@@ -16,6 +16,10 @@ body {
   @apply px-4 py-2 font-bold text-white bg-blue-500 rounded;
 }
 
+.btn-blue:hover {
+  @apply bg-blue-600;
+}
+
 /* Start purging... */
 @tailwind utilities;
 /* Stop purging. */

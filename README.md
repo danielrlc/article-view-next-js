@@ -1,23 +1,6 @@
 # App documentation
 
-- [App documentation](#app-documentation)
-  * [Set up and start app](#set-up-and-start-app)
-  * [Example articles](#example-articles)
-    + [View free article with embedded box](#view-free-article-with-embedded-box)
-    + [View free article with no listImage](#view-free-article-with-no-listimage)
-  * [Tech stack](#tech-stack)
-    + [Why Next.js?](#why-nextjs-)
-    + [Why Tailwind CSS?](#why-tailwind-css-)
-  * [Responsive design](#responsive-design)
-  * [Code formatting](#code-formatting)
-  * [Accessibility notes](#accessibility-notes)
-    + [Semantic HTML elements](#semantic-html-elements)
-    + [Login form](#login-form)
-    + [Accessibility improvements](#accessibility-improvements)
-    + [Issue 1: "Heading elements are not in a sequentially-descending order"](#issue-1---heading-elements-are-not-in-a-sequentially-descending-order-)
-    + [Issue 2: "Image elements do not have [alt] attributes"](#issue-2---image-elements-do-not-have--alt--attributes-)
-  * [Authentication notes](#authentication-notes)
-  * [What next?](#what-next-)
+Table of contents removed. Regenerate after making changes to this document.
 
 <small><i><a href='http://ecotrust-canada.github.io/markdown-toc/'>Table of contents generated with markdown-toc</a></i></small>
 
@@ -38,7 +21,11 @@ Build the app for production:
 yarn run build
 ```
 
-## Example articles
+## Example pages
+
+### Home page
+
+http://localhost:3000/
 
 ### View free article with embedded box
 
@@ -67,6 +54,10 @@ This is handled by this code in `/pages/article/[articleId].js`
 }
 ```
 
+## Code formatting
+
+I used [Prettier](https://prettier.io/) to format my JavaScript, CSS and HTML code consistently. I included a `.prettierrc` file in the root folder, and set the app up without semicolons at the end of JavaScript statements, in line with the documentation on the [Next.js](https://nextjs.org/) website.
+
 ## Tech stack
 
 I used [Next.js](https://nextjs.org/) and [Tailwind CSS](https://tailwindcss.com/) to build the app.
@@ -74,6 +65,7 @@ I used [Next.js](https://nextjs.org/) and [Tailwind CSS](https://tailwindcss.com
 ### Why Next.js?
 
 Next.js lets you use static and/or server-side rendering (SSR). I used SSR in my app as I think it is a good fit for a site like hbl.fi. SSR has advantages over single-page apps (SPAs) in these areas:
+
 - search engine optimisation (SEO)
 - progressive enhancement and accessibility (not relying on client-side JavaScript)
 - time to initial render
@@ -82,6 +74,7 @@ Next.js lets you use static and/or server-side rendering (SSR). I used SSR in my
 ### Why Tailwind CSS?
 
 Here are some of the main reasons why Tailwind is my favourite CSS framework:
+
 - Tailwind lets you see and manage your CSS right inside your HTML.
 - You need to be fairly good at CSS to use Tailwind, and Tailwind helps you improve at CSS, because rather than hiding the CSS away, it makes it far more visible and "in your face".
 - Tailwind helps you avoid specificity issues.
@@ -93,7 +86,11 @@ Here are some of the main reasons why Tailwind is my favourite CSS framework:
 If you haven't used Tailwind CSS before, or some other utility CSS framework, the following line in my code might make you freak out:
 
 ```html
-<div className="text-gray-500 text-sm my-6 border border-l-0 border-r-0 border-gray-300 py-2 flex justify-between">...</div>
+<div
+  className="text-gray-500 text-sm my-6 border border-l-0 border-r-0 border-gray-300 py-2 flex justify-between"
+>
+  ...
+</div>
 ```
 
 But fear not! Tailwind can abstract these classes into a component like this:
@@ -105,18 +102,31 @@ But fear not! Tailwind can abstract these classes into a component like this:
 ```
 
 ```html
-<div className="article-meta-box">...<div>
+<div className="article-meta-box">
+  ...
+  <div></div>
+</div>
 ```
 
 This is what I would do if I wanted to reuse this set of styles elsewhere in the app.
 
+## Security
+
+### dangerouslySetInnerHTML
+
+Some of the content returned from the API is in HTML, with some bold and italic elements. To render this, the app uses React's `dangerouslySetInnerHTML`.
+
+```jsx
+<p key={i} className="mb-4" dangerouslySetInnerHTML={{ __html: html }} />
+```
+
+If there are concerns that the API could be hacked and a cross-site scripting (XSS) attack made on the site, then DOMPurify could be used to sanitise the API HTML data before rendering it. Details here:
+
+[Complete guide on React dangerouslySetInnerHTML](https://linguinecode.com/post/complete-guide-react-dangerouslysetinnerhtml)
+
 ## Responsive design
 
 The app is styled for all screen sizes. On mobile, screen real estate is maximised by using narrower horizontal margins. On desktop, the width of the article text is not too wide, to allow for comfortable reading.
-
-## Code formatting
-
-I used [Prettier](https://prettier.io/) to format my JavaScript, CSS and HTML code consistently. I included a `.prettierrc` file in the root folder, and set the app up without semicolons at the end of JavaScript statements, in line with the documentation on the [Next.js](https://nextjs.org/) website.
 
 ## Accessibility notes
 
@@ -126,9 +136,12 @@ I used these semantic elements in the article view:
 
 ```html
 <header>
-<nav>
-<article>
-<section>
+  <nav>
+    <article>
+      <section></section>
+    </article>
+  </nav>
+</header>
 ```
 
 ### Login form
@@ -185,9 +198,21 @@ I used `axios` to make API requests. I read that it does a good job of standardi
 ## What next?
 
 Here are the things I would add next to this app, if I were getting it ready for production:
+
 - Search engine optimisation (SEO)
 - Friendlier URLs for the article pages
 - Testing with [Cypress](https://www.cypress.io/)
 - Refactoring React components into smaller components, to make the code more readable
 - Customising Tailwind with brand colours and so on
 - Error handling. I have a little of this, but not much.
+
+## Fixes on dev branch
+
+- Fixed "no unique key" console warning on home page
+
+## Investigated, but not fixed yet
+
+Warning about this URL on home page: http://localhost:3000/article/cd84189c-241e-4211-a95e-f20d7ec34c9a
+Warning message: "Prop 'href' did not match... (and then the URL)"
+
+BUT: the network request to that URL looks like it's fine. It sends back a '200 OK' response. So all fine???

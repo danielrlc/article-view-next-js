@@ -63,7 +63,7 @@ function Article({ data }) {
               }`}</span>
             ))}
           </div>
-            <p>{updateTime}</p>
+          <p>{updateTime}</p>
         </section>
 
         {/* article body */}
@@ -92,7 +92,10 @@ function Article({ data }) {
               </figure>
             ) : box ? (
               // View for factbox, eg here: http://localhost:3000/article/a6282b95-e620-4040-87d1-731fed85a7d6
-              <div className="border border-t-8 border-b-4 border-yellow-400 shadow-2xl px-6 pt-4 pb-8 my-8">
+              <div
+                key={i}
+                className="border border-t-8 border-b-4 border-yellow-400 shadow-2xl px-6 pt-4 pb-8 my-8"
+              >
                 {box.headline && (
                   <h2 className="text-2xl font-bold">{box.headline}</h2>
                 )}
