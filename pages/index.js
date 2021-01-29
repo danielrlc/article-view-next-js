@@ -80,29 +80,30 @@ function IndexPage({ data }) {
         <div className="mb-8 text-sm border border-2 rounded p-4">
           <p className="font-bold mb-3">Login details</p>
           <p className="mb-3">
-            (I left this authentication information visible to show that logging in works. I also left cookie information visible in the console when you log in and log out.)</p>
+            (I left this authentication information visible to show that logging
+            in works. I also left cookie information visible in the console when
+            you log in and log out.)
+          </p>
           <p>userId: {userId}</p>
           <p>authToken: {authToken}</p>
         </div>
       )}
       <div className="max-w-2xl mx-auto">
         <h1 className="text-3xl font-bold mb-6">Front page</h1>
-        <h2 className="text-2xl font-bold mb-4">Premium articles</h2>
-        {userIsLoggedIn ? (
-          <ul className="mb-12">
-            {data
-              .filter((article) => article.premium)
-              .map(({ title, uuid }) => (
-                <li key={uuid} className="mb-3">
-                  <Link href={`./article/${uuid}`}>
-                    <a className="underline text-blue-700">{title}</a>
-                  </Link>
-                </li>
-              ))}
-          </ul>
-        ) : (
-          <p className="mb-8">Log in above to read premium articles.</p>
-        )}
+        <h2 className="text-2xl font-bold mb-4">
+          Premium articles (log in to see them)
+        </h2>
+        <ul className="mb-12">
+          {data
+            .filter((article) => article.premium)
+            .map(({ title, uuid }) => (
+              <li key={uuid} className="mb-3">
+                <Link href={`./article/${uuid}`}>
+                  <a className="underline text-blue-700">{title}</a>
+                </Link>
+              </li>
+            ))}
+        </ul>
         <h2 className="text-2xl font-bold mb-4">Free articles</h2>
         <ul className="mb-12">
           {data

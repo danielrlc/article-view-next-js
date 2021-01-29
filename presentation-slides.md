@@ -2,9 +2,11 @@ slidenumbers: true
 
 # Article View app
 
-## Daniel Clarke
+## App and code walkthrough
 
-### 2021-01-29
+### Daniel Clarke
+
+#### 2021-01-29
 
 ---
 
@@ -17,7 +19,7 @@ slidenumbers: true
 # Share the slides after?
 
 - I can share these slides afterwards if you need them.
-- Note that any underlined text means [it's a link](http://endoftheinternet.com/). I may not click on every link now.
+- Note that any underlined text means [it's a link](http://endoftheinternet.com/). I may not click on every link as we go through.
 
 ---
 
@@ -28,21 +30,30 @@ slidenumbers: true
 - Discuss the tech stack
 - What next for the app?
 - Plenty of informal discussion along the way!
-- **Does this all sound okay?**
+- I'm happy to deviate from this path as much or as little as you like!
 
 ---
 
-# Please note: the app is unpolished, due to time constraints
+# First, my new portfolio site :)
 
-- The original [vanilla JS version](https://github.com/danielrlc/article-view-js) got complicated, as I _thought_ I had to create a [proxy server](https://github.com/danielrlc/express-cors-proxy-server) to access the API.
-- So somewhat late in the day, I switched over to Next.js.
-- This didn't leave me much time to get the app polished up!
+- [Daniel Clarke | Web developer](https://daniel-clarke-dev.netlify.app/)
+- The CSS file is currently 183,970 lines long. Whoops!
+- Once I add a plugin, it will be <1000 lines long. Much better!
+
+---
+
+# From vanilla JavaScript to Next.js
+
+- I started building a [vanilla JavaScript version](https://github.com/danielrlc/article-view-js) first.
+- I _thought_ that meant I had to create a [proxy server](https://github.com/danielrlc/express-cors-proxy-server) to access the API.
+- So instead, I switched over to Next.js.
+- This didn't leave me much time to get the app properly polished up!
 
 ---
 
 # main branch / dev branch
 
-- The [main branch](https://github.com/danielrlc/article-view-next) is the locked-down, read-only branch I submitted.
+- The [main branch](https://github.com/danielrlc/article-view-next) is the locked-down, read-only branch I submitted a couple of weeks ago.
 - The [dev branch](https://github.com/danielrlc/article-view-next/tree/dev) has a few fixes and improvements.
 - We'll look at the dev branch now if that's okay, but we can look at the main branch too if you want to.
 
@@ -50,36 +61,37 @@ slidenumbers: true
 
 # App demo - [home page](http://localhost:3000/)
 
-- Any errors? Let's open the console to check.
-- Premium article links don't appear when not logged in.
-- Login button toggles login form.
-- After log in, they do appear.
-- Login info box left visible to show log in details conveniently.
+- The login button toggles the login form.
+- The premium article links don't appear until you're logged in.
 - Cookie information is visible in the console.
 
 ---
 
-# Free article with styled info box 1/2
+# Any errors?
 
-- [Article link](http://localhost:3000/article/edefcc07-68f6-4176-83df-68827e5baf5b)
-- Responsive page layout via Tailwind classes
-  - `max-w-2xl mx-auto`
+- Let's check the console.
+- 1 warning: "Warning: Prop `href` did not match..."
+- Let's investigate!
 
 ---
 
-# Free article with styled info box 2/2
+# [Free article (with styled info box)](http://localhost:3000/article/edefcc07-68f6-4176-83df-68827e5baf5b)
 
-- Note all the Tailwind classes on the info box:
-  - `border border-t-8 border-b-4 border-yellow-400 shadow-2xl px-6 pt-4 pb-8 my-8`
-- Why this is actually great news :)
-- And for reuse, this collection of utility classes can be packaged up into a Tailwind component. (More on that soon.)
+- Responsive page layout tested on _all_ screen sizes for extra resilience
+- Info box styled with Tailwind CSS
 
 ---
 
 # [Premium article](http://localhost:3000/article/ddf6d2ec-def6-4e9f-9a2e-8fd40289396b)
 
 - Logged in: the article appears
-- Not logged in: throws a 403 error. (I didn't get around to handling this, which is why I just hid the links to the premium articles.)
+- Not logged in: throws a 403 error
+
+---
+
+# Any questions?
+
+- Do you have any questions about the app, before we move on to looking at the code?
 
 ---
 
@@ -90,33 +102,72 @@ slidenumbers: true
 
 ---
 
-# Prettier configuration
+# Prettier to the rescue!
 
-```
-// .prettierrc file
-{
-  "semi": false,
-  "singleQuote": true
-}
-```
-
-- This file configures Prettier to follow the syntax rules for JavaScript in the Next.js documentation.
+- Prettier is a formatting tool that can be run in VS Code on every save.
+- It automates the boring stuff like indenting code.
+- If there are syntax errors, it flags them up.
+- This makes Prettier the first line of testing.
+- [Tabs or spaces](https://www.youtube.com/watch?v=V7PLxL8jIl8)? Who cares! Let Prettier decide and forget about it.
 
 ---
 
-# Hello Tailwind CSS!
+# Hello, Tailwind CSS!
 
-- `index.css` shows how Tailwind is pulled in.
-- Tailwind consists of tiny, single-purpose **utility** classes like `mb-4`, `inline-block` and `bg-green-300`.
-- These classes can then be packaged up into Tailwind **component** classes, like `.btn-blue` in this file.
-- I like to think of Tailwind **utility** classes and **component** classes as being like atoms and molecules.
-- Note how the specificity goes from low to high.
+- "Rapidly build modern websites without ever leaving your HTML."
+- Tailwind is [gaining rapidly in popularity](https://2020.stateofcss.com/en-US/technologies/css-frameworks/) among developers.
 
 ---
 
-# Tailwind helps you avoid [specificity wars](https://csswizardry.com/2014/10/the-specificity-graph/)
+# How Tailwind builds your CSS
+
+- `index.css` shows what Tailwind builds: base, components and utilities.
+- Tailwind builds a 171,000-line file of CSS from that.
+- The built version is ~500 lines long, as all unused Tailwind classes are removed.
+- Let's take a look! (`tailwind-post-build-deminimised.css`)
+
+---
+
+# How Tailwind works
+
+- Tailwind consists of tiny, single-purpose **utility** classes like `.mb-4`, `.inline-block` and `.bg-green-300`.
+- These classes can then be packaged up into Tailwind **component** classes, like `.btn-blue`.
+
+---
+
+# Goodbye forever, [CSS specificity wars!](https://csswizardry.com/2014/10/the-specificity-graph/)
 
 - Tailwind handles specificity elegantly by making you declare all your component classes before utility classes.
 - This means a Tailwind utility class like `mb-4` will always override classes in a component, allowing you to make small overrides to your components on the fly.
 
 ---
+
+# Making the CSS global
+
+- `_app.js` has a wrapper component that imports our CSS file, and passes that down as props to the whole app it wraps.
+
+---
+
+# Tailwind in action
+
+- `index.js`
+- `login.js`
+- `[articleId].js`
+
+---
+
+# React and Next.js - high level
+
+- All state stored in `IndexPage` component using React Hooks
+- Props get passed down to `Nav` and `Login` components
+- Axios used for API requests
+- A cookie is used to store the authentication token
+
+---
+
+# React and Next.js - low level
+
+- `index.js`
+- `login.js`
+- `nav.js`
+- `[articleId.js]`

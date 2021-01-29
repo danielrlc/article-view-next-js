@@ -2,6 +2,8 @@ import axios from 'axios'
 import * as cookie from 'cookie'
 import Cookies from 'js-cookie'
 import Nav from '../../components/nav'
+import PremiumContent from '../../components/premiumContent'
+import PremiumTeaser from '../../components/premiumTeaser'
 
 // This gets called on every request
 // export async function getServerSideProps({ params }) {
@@ -13,107 +15,24 @@ export async function getServerSideProps(context) {
     AuthUser: userId,
     Authorization: `OAuth ${authToken}`,
   }
-  if (userId && authToken) {
-    var response = await axios.get(url, { headers })
+  var response = await axios
+    .get(url)
+    .then((response) => response.data)
+    .catch(
+      (error) =>
+        (error.request.res.statusCode = 403
+          ? console.log(`There's no such thing as a free lunch, boy!`)
+          : null)
+    )
+  if (response.data) {
+    var data = response.data
+    return { props: { data } }
   } else {
-    var response = await axios.get(url)
+    return { props: {} }
   }
-  const data = response.data
-  return { props: { data } }
+  // }
 }
 
-function Article({ data }) {
-  const {
-    authors,
-    body,
-    listImage,
-    mainImage,
-    updateTime,
-    preamble,
-    publishingTime,
-    shareUrl,
-    title,
-  } = data
-
-  return (
-    <div className="px-4 lg:px-10 mt-6 mb-16 text-gray-800">
-      <article className="max-w-2xl mx-auto">
-        {/* title and main image */}
-        <h1 className="text-4xl mb-6">{title}</h1>
-        {listImage && (
-          <figure>
-            <img
-              src={listImage.url}
-              alt={listImage.caption}
-              className="w-full mb-1"
-            />
-            <figcaption className="text-gray-500 text-sm">
-              {listImage.caption} {listImage.byline}
-            </figcaption>
-          </figure>
-        )}
-
-        {/* article meta */}
-        <section className="text-gray-500 text-sm my-6 border border-l-0 border-r-0 border-gray-300 py-2 flex justify-between">
-          <div>
-            {/* Demo to test with >1 author here: https://codesandbox.io/s/beautiful-colden-k1rpm?file=/src/App.js */}
-            {authors.map((author, i) => (
-              <span key={i}>{`${author.byline}${
-                i < authors.length - 1 ? ', ' : ''
-              }`}</span>
-            ))}
-          </div>
-          <p>{updateTime}</p>
-        </section>
-
-        {/* article body */}
-        <section>
-          <p className="text-2xl mb-4">{preamble}</p>
-          {body.map(({ html, headline, image, box }, i) => {
-            return html ? (
-              <p
-                key={i}
-                className="mb-4"
-                dangerouslySetInnerHTML={{ __html: html }}
-              />
-            ) : headline ? (
-              <h2
-                key={i}
-                className="text-2xl font-bold text-gray-700 mb-2 mt-6"
-              >
-                {headline}
-              </h2>
-            ) : image ? (
-              <figure key={i} className="mb-4">
-                <img src={image.url} alt={image.caption} className="w-full" />
-                <figcaption className="text-gray-500">
-                  {image.caption} {image.byline}
-                </figcaption>
-              </figure>
-            ) : box ? (
-              // View for factbox, eg here: http://localhost:3000/article/a6282b95-e620-4040-87d1-731fed85a7d6
-              <div
-                key={i}
-                className="border border-t-8 border-b-4 border-yellow-400 shadow-2xl px-6 pt-4 pb-8 my-8"
-              >
-                {box.headline && (
-                  <h2 className="text-2xl font-bold">{box.headline}</h2>
-                )}
-                {box.title && (
-                  <h3 className="text-2xl font-bold">{box.title}</h3>
-                )}
-                {box.content.map((text, i) => {
-                  return (
-                    <p key={i} dangerouslySetInnerHTML={{ __html: text }} />
-                  )
-                })}
-              </div>
-            ) : null
-          })}
-        </section>
-      </article>
-    </div>
-  )
+export default function PaywallFilter({ data }) {
+  return data ? <PremiumContent data={data} /> : <PremiumTeaser data={data} />
 }
-
-export default Article
